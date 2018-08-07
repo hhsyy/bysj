@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.GroupgMapper" >
+  <resultMap id="BaseResultMap" type="org.itjl.model.Groupg" >
+    <id column="group_id" property="group_id" jdbcType="INTEGER" />
+    <result column="group_name" property="group_name" jdbcType="VARCHAR" />
+    <result column="group_time" property="group_time" jdbcType="DATE" />
+    <result column="group_ms" property="group_ms" jdbcType="VARCHAR" />
+    <result column="group_wj" property="group_wj" jdbcType="VARCHAR" />
+    <result column="group_gg" property="group_gg" jdbcType="VARCHAR" />
+    <result column="group_lv" property="group_lv" jdbcType="INTEGER" />
+    <result column="group_bq" property="group_bq" jdbcType="VARCHAR" />
+    <result column="user_id" property="user_id" jdbcType="INTEGER" />
+    <result column="group_jy" property="group_jy" jdbcType="INTEGER" />
+    <result column="group_tp" property="group_tp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    group_id, group_name, group_time, group_ms, group_wj, group_gg, group_lv, group_bq, 
+    user_id, group_jy, group_tp
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.itjl.model.GroupgCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from groupg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from groupg
+    where group_id = #{group_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from groupg
+    where group_id = #{group_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.itjl.model.GroupgCriteria" >
+    delete from groupg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.itjl.model.Groupg" >
+    insert into groupg (group_id, group_name, group_time, 
+      group_ms, group_wj, group_gg, 
+      group_lv, group_bq, user_id, 
+      group_jy, group_tp)
+    values (#{group_id,jdbcType=INTEGER}, #{group_name,jdbcType=VARCHAR}, #{group_time,jdbcType=DATE}, 
+      #{group_ms,jdbcType=VARCHAR}, #{group_wj,jdbcType=VARCHAR}, #{group_gg,jdbcType=VARCHAR}, 
+      #{group_lv,jdbcType=INTEGER}, #{group_bq,jdbcType=VARCHAR}, #{user_id,jdbcType=INTEGER}, 
+      #{group_jy,jdbcType=INTEGER}, #{group_tp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.itjl.model.Groupg" >
+    insert into groupg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="group_id != null" >
+        group_id,
+      </if>
+      <if test="group_name != null" >
+        group_name,
+      </if>
+      <if test="group_time != null" >
+        group_time,
+      </if>
+      <if test="group_ms != null" >
+        group_ms,
+      </if>
+      <if test="group_wj != null" >
+        group_wj,
+      </if>
+      <if test="group_gg != null" >
+        group_gg,
+      </if>
+      <if test="group_lv != null" >
+        group_lv,
+      </if>
+      <if test="group_bq != null" >
+        group_bq,
+      </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
+      <if test="group_jy != null" >
+        group_jy,
+      </if>
+      <if test="group_tp != null" >
+        group_tp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="group_id != null" >
+        #{group_id,jdbcType=INTEGER},
+      </if>
+      <if test="group_name != null" >
+        #{group_name,jdbcType=VARCHAR},
+      </if>
+      <if test="group_time != null" >
+        #{group_time,jdbcType=DATE},
+      </if>
+      <if test="group_ms != null" >
+        #{group_ms,jdbcType=VARCHAR},
+      </if>
+      <if test="group_wj != null" >
+        #{group_wj,jdbcType=VARCHAR},
+      </if>
+      <if test="group_gg != null" >
+        #{group_gg,jdbcType=VARCHAR},
+      </if>
+      <if test="group_lv != null" >
+        #{group_lv,jdbcType=INTEGER},
+      </if>
+      <if test="group_bq != null" >
+        #{group_bq,jdbcType=VARCHAR},
+      </if>
+      <if test="user_id != null" >
+        #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="group_jy != null" >
+        #{group_jy,jdbcType=INTEGER},
+      </if>
+      <if test="group_tp != null" >
+        #{group_tp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.itjl.model.GroupgCriteria" resultType="java.lang.Integer" >
+    select count(*) from groupg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update groupg
+    <set >
+      <if test="record.group_id != null" >
+        group_id = #{record.group_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.group_name != null" >
+        group_name = #{record.group_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.group_time != null" >
+        group_time = #{record.group_time,jdbcType=DATE},
+      </if>
+      <if test="record.group_ms != null" >
+        group_ms = #{record.group_ms,jdbcType=VARCHAR},
+      </if>
+      <if test="record.group_wj != null" >
+        group_wj = #{record.group_wj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.group_gg != null" >
+        group_gg = #{record.group_gg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.group_lv != null" >
+        group_lv = #{record.group_lv,jdbcType=INTEGER},
+      </if>
+      <if test="record.group_bq != null" >
+        group_bq = #{record.group_bq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.user_id != null" >
+        user_id = #{record.user_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.group_jy != null" >
+        group_jy = #{record.group_jy,jdbcType=INTEGER},
+      </if>
+      <if test="record.group_tp != null" >
+        group_tp = #{record.group_tp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update groupg
+    set group_id = #{record.group_id,jdbcType=INTEGER},
+      group_name = #{record.group_name,jdbcType=VARCHAR},
+      group_time = #{record.group_time,jdbcType=DATE},
+      group_ms = #{record.group_ms,jdbcType=VARCHAR},
+      group_wj = #{record.group_wj,jdbcType=VARCHAR},
+      group_gg = #{record.group_gg,jdbcType=VARCHAR},
+      group_lv = #{record.group_lv,jdbcType=INTEGER},
+      group_bq = #{record.group_bq,jdbcType=VARCHAR},
+      user_id = #{record.user_id,jdbcType=INTEGER},
+      group_jy = #{record.group_jy,jdbcType=INTEGER},
+      group_tp = #{record.group_tp,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.itjl.model.Groupg" >
+    update groupg
+    <set >
+      <if test="group_name != null" >
+        group_name = #{group_name,jdbcType=VARCHAR},
+      </if>
+      <if test="group_time != null" >
+        group_time = #{group_time,jdbcType=DATE},
+      </if>
+      <if test="group_ms != null" >
+        group_ms = #{group_ms,jdbcType=VARCHAR},
+      </if>
+      <if test="group_wj != null" >
+        group_wj = #{group_wj,jdbcType=VARCHAR},
+      </if>
+      <if test="group_gg != null" >
+        group_gg = #{group_gg,jdbcType=VARCHAR},
+      </if>
+      <if test="group_lv != null" >
+        group_lv = #{group_lv,jdbcType=INTEGER},
+      </if>
+      <if test="group_bq != null" >
+        group_bq = #{group_bq,jdbcType=VARCHAR},
+      </if>
+      <if test="user_id != null" >
+        user_id = #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="group_jy != null" >
+        group_jy = #{group_jy,jdbcType=INTEGER},
+      </if>
+      <if test="group_tp != null" >
+        group_tp = #{group_tp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where group_id = #{group_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.itjl.model.Groupg" >
+    update groupg
+    set group_name = #{group_name,jdbcType=VARCHAR},
+      group_time = #{group_time,jdbcType=DATE},
+      group_ms = #{group_ms,jdbcType=VARCHAR},
+      group_wj = #{group_wj,jdbcType=VARCHAR},
+      group_gg = #{group_gg,jdbcType=VARCHAR},
+      group_lv = #{group_lv,jdbcType=INTEGER},
+      group_bq = #{group_bq,jdbcType=VARCHAR},
+      user_id = #{user_id,jdbcType=INTEGER},
+      group_jy = #{group_jy,jdbcType=INTEGER},
+      group_tp = #{group_tp,jdbcType=VARCHAR}
+    where group_id = #{group_id,jdbcType=INTEGER}
+  </update>
+</mapper>

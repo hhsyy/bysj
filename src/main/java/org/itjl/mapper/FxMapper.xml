@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.FxMapper">
+	<resultMap id="BaseResultMap" type="org.itjl.model.Fx">
+		<id column="fx_id" property="fx_id" jdbcType="INTEGER" />
+		<result column="fx_bt" property="fx_bt" jdbcType="VARCHAR" />
+		<result column="fx_date" property="fx_date" jdbcType="DATE" />
+		<result column="fx_xzl" property="fx_xzl" jdbcType="INTEGER" />
+		<result column="fx_jf" property="fx_jf" jdbcType="INTEGER" />
+		<result column="fx_bq" property="fx_bq" jdbcType="VARCHAR" />
+		<result column="fx_tp" property="fx_tp" jdbcType="VARCHAR" />
+		<result column="user_id" property="user_id" jdbcType="INTEGER" />
+		<result column="fx_wj" property="fx_wj" jdbcType="VARCHAR" />
+		<result column="fx_ms" property="fx_ms" jdbcType="VARCHAR" />
+		<association property="user" column="user" javaType="org.itjl.model.User">
+			<id property="user_id" column="user_id" />
+			<result property="user_name" column="user_name" />
+		</association>
+	</resultMap>
+	<resultMap id="HybMap" type="org.itjl.fl.Hyb">
+		<result column="user_name" property="user_name" jdbcType="VARCHAR" />
+		<result column="user_tx" property="user_tx" jdbcType="VARCHAR" />
+		<result column="count" property="count" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		fx_id, fx_bt, fx_date, fx_xzl, fx_jf, fx_bq, fx_tp, f.user_id, fx_wj,
+		fx_ms,user_name
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="org.itjl.model.FxCriteria">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from fx
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from fx f left join user u on u.user_id=f.user_id
+		where fx_id = #{fx_id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByXzl" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from fx f left join user u on u.user_id=f.user_id order by fx_xzl desc
+	</select>
+	<select id="selectByDate" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from fx f left join user u on u.user_id=f.user_id
+		where
+		1=1
+		<if test="fx_bt != 'zero'">
+			and fx_bt like "%"#{fx_bt} "%"
+		</if>
+		order by fx_date desc
+	</select>
+	<select id="selectByCount" resultMap="HybMap">
+		select count(*) as count,user_name,u.user_id,user_tx
+		from fx f left join user u on u.user_id=f.user_id group by user_name order
+		by count desc limit 0,5
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from fx
+		where fx_id = #{fx_id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="org.itjl.model.FxCriteria">
+		delete from fx
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="org.itjl.model.Fx">
+		insert into fx (fx_id, fx_bt, fx_date,
+		fx_xzl, fx_jf, fx_bq,
+		fx_tp, user_id, fx_wj,
+		fx_ms)
+		values (#{fx_id,jdbcType=INTEGER}, #{fx_bt,jdbcType=VARCHAR},
+		#{fx_date,jdbcType=DATE},
+		#{fx_xzl,jdbcType=INTEGER}, #{fx_jf,jdbcType=INTEGER}, #{fx_bq,jdbcType=VARCHAR},
+		#{fx_tp,jdbcType=VARCHAR}, #{user_id,jdbcType=INTEGER},
+		#{fx_wj,jdbcType=VARCHAR},
+		#{fx_ms,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="org.itjl.model.Fx">
+		insert into fx
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="fx_id != null">
+				fx_id,
+			</if>
+			<if test="fx_bt != null">
+				fx_bt,
+			</if>
+			<if test="fx_date != null">
+				fx_date,
+			</if>
+			<if test="fx_xzl != null">
+				fx_xzl,
+			</if>
+			<if test="fx_jf != null">
+				fx_jf,
+			</if>
+			<if test="fx_bq != null">
+				fx_bq,
+			</if>
+			<if test="fx_tp != null">
+				fx_tp,
+			</if>
+			<if test="user_id != null">
+				user_id,
+			</if>
+			<if test="fx_wj != null">
+				fx_wj,
+			</if>
+			<if test="fx_ms != null">
+				fx_ms,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="fx_id != null">
+				#{fx_id,jdbcType=INTEGER},
+			</if>
+			<if test="fx_bt != null">
+				#{fx_bt,jdbcType=VARCHAR},
+			</if>
+			<if test="fx_date != null">
+				#{fx_date,jdbcType=DATE},
+			</if>
+			<if test="fx_xzl != null">
+				#{fx_xzl,jdbcType=INTEGER},
+			</if>
+			<if test="fx_jf != null">
+				#{fx_jf,jdbcType=INTEGER},
+			</if>
+			<if test="fx_bq != null">
+				#{fx_bq,jdbcType=VARCHAR},
+			</if>
+			<if test="fx_tp != null">
+				#{fx_tp,jdbcType=VARCHAR},
+			</if>
+			<if test="user_id != null">
+				#{user_id,jdbcType=INTEGER},
+			</if>
+			<if test="fx_wj != null">
+				#{fx_wj,jdbcType=VARCHAR},
+			</if>
+			<if test="fx_ms != null">
+				#{fx_ms,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="org.itjl.model.FxCriteria"
+		resultType="java.lang.Integer">
+		select count(*) from fx
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update fx
+		<set>
+			<if test="record.fx_id != null">
+				fx_id = #{record.fx_id,jdbcType=INTEGER},
+			</if>
+			<if test="record.fx_bt != null">
+				fx_bt = #{record.fx_bt,jdbcType=VARCHAR},
+			</if>
+			<if test="record.fx_date != null">
+				fx_date = #{record.fx_date,jdbcType=DATE},
+			</if>
+			<if test="record.fx_xzl != null">
+				fx_xzl = #{record.fx_xzl,jdbcType=INTEGER},
+			</if>
+			<if test="record.fx_jf != null">
+				fx_jf = #{record.fx_jf,jdbcType=INTEGER},
+			</if>
+			<if test="record.fx_bq != null">
+				fx_bq = #{record.fx_bq,jdbcType=VARCHAR},
+			</if>
+			<if test="record.fx_tp != null">
+				fx_tp = #{record.fx_tp,jdbcType=VARCHAR},
+			</if>
+			<if test="record.user_id != null">
+				user_id = #{record.user_id,jdbcType=INTEGER},
+			</if>
+			<if test="record.fx_wj != null">
+				fx_wj = #{record.fx_wj,jdbcType=VARCHAR},
+			</if>
+			<if test="record.fx_ms != null">
+				fx_ms = #{record.fx_ms,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update fx
+		set fx_id = #{record.fx_id,jdbcType=INTEGER},
+		fx_bt = #{record.fx_bt,jdbcType=VARCHAR},
+		fx_date = #{record.fx_date,jdbcType=DATE},
+		fx_xzl = #{record.fx_xzl,jdbcType=INTEGER},
+		fx_jf = #{record.fx_jf,jdbcType=INTEGER},
+		fx_bq = #{record.fx_bq,jdbcType=VARCHAR},
+		fx_tp = #{record.fx_tp,jdbcType=VARCHAR},
+		user_id = #{record.user_id,jdbcType=INTEGER},
+		fx_wj = #{record.fx_wj,jdbcType=VARCHAR},
+		fx_ms = #{record.fx_ms,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="org.itjl.model.Fx">
+		update fx
+		<set>
+			<if test="fx_bt != null">
+				fx_bt = #{fx_bt,jdbcType=VARCHAR},
+			</if>
+			<if test="fx_date != null">
+				fx_date = #{fx_date,jdbcType=DATE},
+			</if>
+			<if test="fx_xzl != null">
+				fx_xzl = #{fx_xzl,jdbcType=INTEGER},
+			</if>
+			<if test="fx_jf != null">
+				fx_jf = #{fx_jf,jdbcType=INTEGER},
+			</if>
+			<if test="fx_bq != null">
+				fx_bq = #{fx_bq,jdbcType=VARCHAR},
+			</if>
+			<if test="fx_tp != null">
+				fx_tp = #{fx_tp,jdbcType=VARCHAR},
+			</if>
+			<if test="user_id != null">
+				user_id = #{user_id,jdbcType=INTEGER},
+			</if>
+			<if test="fx_wj != null">
+				fx_wj = #{fx_wj,jdbcType=VARCHAR},
+			</if>
+			<if test="fx_ms != null">
+				fx_ms = #{fx_ms,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where fx_id = #{fx_id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.itjl.model.Fx">
+		update fx
+		set fx_bt = #{fx_bt,jdbcType=VARCHAR},
+		fx_date = #{fx_date,jdbcType=DATE},
+		fx_xzl = #{fx_xzl,jdbcType=INTEGER},
+		fx_jf = #{fx_jf,jdbcType=INTEGER},
+		fx_bq = #{fx_bq,jdbcType=VARCHAR},
+		fx_tp = #{fx_tp,jdbcType=VARCHAR},
+		user_id = #{user_id,jdbcType=INTEGER},
+		fx_wj = #{fx_wj,jdbcType=VARCHAR},
+		fx_ms = #{fx_ms,jdbcType=VARCHAR}
+		where fx_id = #{fx_id,jdbcType=INTEGER}
+	</update>
+</mapper>

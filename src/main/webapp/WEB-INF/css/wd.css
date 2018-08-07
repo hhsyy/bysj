@@ -1,0 +1,218 @@
+body {
+    background-color: #f4f4f4;
+}
+
+a {
+    color: inherit;
+    cursor: pointer;
+
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.dhl_tp{
+    width: 100%;
+    height: 100px;
+    background-image: url(../images/zc/rl_top.35edfde.png);
+}
+
+.zt{
+    height: auto;
+    margin-top: -10px;
+}
+
+.zt_l{
+    height: auto;
+   background-color: #fff;
+}
+
+.zt_r{;
+    height: auto;
+}
+
+.fgh{
+    height: 10px;
+    background-color: #f4f4f4;
+}
+
+.fgx{
+    width: 99.8%;
+    height: 20px;
+    margin: 0px 0.1% 0px 0.1%;
+    background-color: #f4f4f4;
+}
+
+.fl{
+    height: 50px;
+    background-color: #fff;
+    padding-top: 18px;
+}
+
+.fl_tb{
+    width:20px;
+    height: 20px
+}
+
+.fl_zt_hover{
+    cursor: pointer;
+    color: #00a0d8;
+}
+
+.fl_zt:hover{
+    cursor: pointer;
+    color: #00a0d8;
+}
+
+.zsq{
+    height: 120px;
+}
+
+.zdq_l{
+    height: 100%;
+    padding: 20px;
+}
+
+.zdq_r{
+    width: 10%;
+    height: 100%;
+    padding-top: 30px;
+}
+
+.zdq_l_sj{
+    width: 100%;
+    height: 20px;
+}
+
+.zdq_l_bt{
+    height: 40px;
+}
+
+.zdq_l_jj{
+    height: 20px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.zdq_l_bq{
+    height: 20px;
+}
+
+.zdq_l_bt_zt{
+    font-size: 22px;
+}
+
+.hs{
+    color: #7b7c7c;
+}
+
+.zdq_r_sl{
+   
+    width: 50px;
+    height: 40px;
+    background-color: #f4f4f4;
+}
+
+.zdq_r_sl_zt{
+    font-size: 30px;
+    color:darkseagreen;
+}
+
+.lbts_id{
+  line-height: 40px;
+    font-size: 20px;
+}
+
+
+.bjdh{
+    height:200px;
+    
+}
+
+.bjdh_kj{
+  background-color: #fff;
+     width: 100%;
+    height:100%;
+    padding: 5%;
+}
+
+.bjdh_kj_xx{
+  
+    width: 60px;
+    height:70px;
+    margin:5px;
+}
+
+.bjdh_kj_a{
+    margin-top: 10px;
+}
+
+.bjdh_tb{
+    width: 50px;
+    height:50px;
+}
+
+
+.bjdh_kj_a:hover{
+    cursor: pointer;
+    color: #00a0d8;
+}
+
+
+.wdxx{
+    height: 200px;
+}
+
+.wdxx_row{
+    margin-top: 5px;
+}
+
+.hyb_tx{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.hyb{
+    width: 100%;
+    height: auto;
+}
+
+.hyb_body{
+    height: 45px;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+
+.bqzy{
+    width: 100%;
+    height:200px;
+}
+
+.editor{
+    min-height:300px;
+}
+.zt_l_zt{
+    height: auto;
+    background-color: #fff;
+    padding: 20px;
+}

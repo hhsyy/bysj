@@ -1,0 +1,117 @@
+body {
+    background-color: #f4f4f4;
+}
+
+a {
+    color: inherit;
+    cursor: pointer;
+
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+.fgh {
+    height: 10px;
+    background-color: #f4f4f4;
+}
+
+.header_a_lbt,
+.zt_gs {
+    background-color: #fff;
+    padding: 20px;
+}
+
+.header_a_gs {
+    padding: 20px;
+    background-color: #47484b;
+}
+
+.gs_img {
+    width: 90px;
+    height: 90px;
+}
+
+.hs {
+    color: #7b7c7c;
+}
+
+.xydhl_zt {
+    font-size: 15px;
+}
+
+.xydhl_zt:hover {
+    background-color: #0091e4;
+    cursor: pointer;
+    color: #fff;
+}
+
+.xydhl_zt_hover {
+    background-color: #0091e4;
+    color: #fff;
+}
+
+.xzzs {
+    position: relative;
+}
+
+.xzzs:hover {
+    cursor: pointer;
+}
+
+.wdxx_fl:hover {
+    background-color: #f4f4f4;
+    cursor: pointer;
+}
+
+.rmtj_zt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.xmzs {
+    background-color: #fff;
+    height: 130px;
+    padding: 20px;
+}
+
+.xmzs_nr,
+.xqlb_nr {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.xmzs_zt:hover {
+    border-left: solid 5px #5bc0d1;
+}
+
+.xy_tz:hover {
+    color: #199d80;
+}
+
+.xy_tz_hover {
+    color: #199d80;
+    border-bottom: 2px solid #199d80;
+}
+
+

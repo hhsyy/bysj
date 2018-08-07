@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.Zx_lbMapper" >
+  <resultMap id="BaseResultMap" type="org.itjl.model.Zx_lb" >
+    <result column="zx_lb_id" property="zx_lb_id" jdbcType="INTEGER" />
+    <result column="zx_lb_name" property="zx_lb_name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    zx_lb_id, zx_lb_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.itjl.model.Zx_lbCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from zx_lb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="org.itjl.model.Zx_lbCriteria" >
+    delete from zx_lb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.itjl.model.Zx_lb" >
+    insert into zx_lb (zx_lb_id, zx_lb_name)
+    values (#{zx_lb_id,jdbcType=INTEGER}, #{zx_lb_name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.itjl.model.Zx_lb" >
+    insert into zx_lb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="zx_lb_id != null" >
+        zx_lb_id,
+      </if>
+      <if test="zx_lb_name != null" >
+        zx_lb_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="zx_lb_id != null" >
+        #{zx_lb_id,jdbcType=INTEGER},
+      </if>
+      <if test="zx_lb_name != null" >
+        #{zx_lb_name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.itjl.model.Zx_lbCriteria" resultType="java.lang.Integer" >
+    select count(*) from zx_lb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update zx_lb
+    <set >
+      <if test="record.zx_lb_id != null" >
+        zx_lb_id = #{record.zx_lb_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.zx_lb_name != null" >
+        zx_lb_name = #{record.zx_lb_name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update zx_lb
+    set zx_lb_id = #{record.zx_lb_id,jdbcType=INTEGER},
+      zx_lb_name = #{record.zx_lb_name,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

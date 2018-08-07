@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.XqMapper" >
+  <resultMap id="BaseResultMap" type="org.itjl.model.Xq" >
+    <id column="xq_id" property="xq_id" jdbcType="INTEGER" />
+    <result column="xq_bt" property="xq_bt" jdbcType="VARCHAR" />
+    <result column="xq_date" property="xq_date" jdbcType="DATE" />
+    <result column="xq_ll" property="xq_ll" jdbcType="INTEGER" />
+    <result column="xq_jf" property="xq_jf" jdbcType="INTEGER" />
+    <result column="user_id" property="user_id" jdbcType="INTEGER" />
+    <result column="xq_bq" property="xq_bq" jdbcType="VARCHAR" />
+    	<association property="user" column="user" javaType="org.itjl.model.User">
+			<id property="user_id" column="user_id" />
+			<result property="user_name" column="user_name" />
+			<result property="user_tx" column="user_tx" />
+		</association>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.itjl.model.Xq" extends="BaseResultMap" >
+    <result column="xq_nr" property="xq_nr" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    xq_id, xq_bt, xq_date, xq_ll, xq_jf, u.user_id, xq_bq,user_name,user_tx
+  </sql>
+  <sql id="Blob_Column_List" >
+    xq_nr
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.itjl.model.XqCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xq x left join user u on x.user_id=u.user_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.itjl.model.XqCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from xq
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xq x left join user u on x.user_id=u.user_id
+    where x.xq_id = #{xq_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from xq
+    where xq_id = #{xq_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.itjl.model.XqCriteria" >
+    delete from xq
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.itjl.model.Xq" >
+    insert into xq (xq_id, xq_bt, xq_date, 
+      xq_ll, xq_jf, user_id, 
+      xq_bq, xq_nr)
+    values (#{xq_id,jdbcType=INTEGER}, #{xq_bt,jdbcType=VARCHAR}, #{xq_date,jdbcType=DATE}, 
+      #{xq_ll,jdbcType=INTEGER}, #{xq_jf,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, 
+      #{xq_bq,jdbcType=VARCHAR}, #{xq_nr,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.itjl.model.Xq" >
+    insert into xq
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="xq_id != null" >
+        xq_id,
+      </if>
+      <if test="xq_bt != null" >
+        xq_bt,
+      </if>
+      <if test="xq_date != null" >
+        xq_date,
+      </if>
+      <if test="xq_ll != null" >
+        xq_ll,
+      </if>
+      <if test="xq_jf != null" >
+        xq_jf,
+      </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
+      <if test="xq_bq != null" >
+        xq_bq,
+      </if>
+      <if test="xq_nr != null" >
+        xq_nr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="xq_id != null" >
+        #{xq_id,jdbcType=INTEGER},
+      </if>
+      <if test="xq_bt != null" >
+        #{xq_bt,jdbcType=VARCHAR},
+      </if>
+      <if test="xq_date != null" >
+        #{xq_date,jdbcType=DATE},
+      </if>
+      <if test="xq_ll != null" >
+        #{xq_ll,jdbcType=INTEGER},
+      </if>
+      <if test="xq_jf != null" >
+        #{xq_jf,jdbcType=INTEGER},
+      </if>
+      <if test="user_id != null" >
+        #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="xq_bq != null" >
+        #{xq_bq,jdbcType=VARCHAR},
+      </if>
+      <if test="xq_nr != null" >
+        #{xq_nr,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.itjl.model.XqCriteria" resultType="java.lang.Integer" >
+    select count(*) from xq
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update xq
+    <set >
+      <if test="record.xq_id != null" >
+        xq_id = #{record.xq_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.xq_bt != null" >
+        xq_bt = #{record.xq_bt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xq_date != null" >
+        xq_date = #{record.xq_date,jdbcType=DATE},
+      </if>
+      <if test="record.xq_ll != null" >
+        xq_ll = #{record.xq_ll,jdbcType=INTEGER},
+      </if>
+      <if test="record.xq_jf != null" >
+        xq_jf = #{record.xq_jf,jdbcType=INTEGER},
+      </if>
+      <if test="record.user_id != null" >
+        user_id = #{record.user_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.xq_bq != null" >
+        xq_bq = #{record.xq_bq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xq_nr != null" >
+        xq_nr = #{record.xq_nr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update xq
+    set xq_id = #{record.xq_id,jdbcType=INTEGER},
+      xq_bt = #{record.xq_bt,jdbcType=VARCHAR},
+      xq_date = #{record.xq_date,jdbcType=DATE},
+      xq_ll = #{record.xq_ll,jdbcType=INTEGER},
+      xq_jf = #{record.xq_jf,jdbcType=INTEGER},
+      user_id = #{record.user_id,jdbcType=INTEGER},
+      xq_bq = #{record.xq_bq,jdbcType=VARCHAR},
+      xq_nr = #{record.xq_nr,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update xq
+    set xq_id = #{record.xq_id,jdbcType=INTEGER},
+      xq_bt = #{record.xq_bt,jdbcType=VARCHAR},
+      xq_date = #{record.xq_date,jdbcType=DATE},
+      xq_ll = #{record.xq_ll,jdbcType=INTEGER},
+      xq_jf = #{record.xq_jf,jdbcType=INTEGER},
+      user_id = #{record.user_id,jdbcType=INTEGER},
+      xq_bq = #{record.xq_bq,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.itjl.model.Xq" >
+    update xq
+    <set >
+      <if test="xq_bt != null" >
+        xq_bt = #{xq_bt,jdbcType=VARCHAR},
+      </if>
+      <if test="xq_date != null" >
+        xq_date = #{xq_date,jdbcType=DATE},
+      </if>
+      <if test="xq_ll != null" >
+        xq_ll = #{xq_ll,jdbcType=INTEGER},
+      </if>
+      <if test="xq_jf != null" >
+        xq_jf = #{xq_jf,jdbcType=INTEGER},
+      </if>
+      <if test="user_id != null" >
+        user_id = #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="xq_bq != null" >
+        xq_bq = #{xq_bq,jdbcType=VARCHAR},
+      </if>
+      <if test="xq_nr != null" >
+        xq_nr = #{xq_nr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where xq_id = #{xq_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.itjl.model.Xq" >
+    update xq
+    set xq_bt = #{xq_bt,jdbcType=VARCHAR},
+      xq_date = #{xq_date,jdbcType=DATE},
+      xq_ll = #{xq_ll,jdbcType=INTEGER},
+      xq_jf = #{xq_jf,jdbcType=INTEGER},
+      user_id = #{user_id,jdbcType=INTEGER},
+      xq_bq = #{xq_bq,jdbcType=VARCHAR},
+      xq_nr = #{xq_nr,jdbcType=LONGVARCHAR}
+    where xq_id = #{xq_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.itjl.model.Xq" >
+    update xq
+    set xq_bt = #{xq_bt,jdbcType=VARCHAR},
+      xq_date = #{xq_date,jdbcType=DATE},
+      xq_ll = #{xq_ll,jdbcType=INTEGER},
+      xq_jf = #{xq_jf,jdbcType=INTEGER},
+      user_id = #{user_id,jdbcType=INTEGER},
+      xq_bq = #{xq_bq,jdbcType=VARCHAR}
+    where xq_id = #{xq_id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.WdMapper">
+	<resultMap id="BaseResultMap" type="org.itjl.model.Wd">
+		<id column="wd_id" property="wd_id" jdbcType="INTEGER" />
+		<result column="wd_bt" property="wd_bt" jdbcType="VARCHAR" />
+		<result column="wd_time" property="wd_time" jdbcType="DATE" />
+		<result column="wd_bq" property="wd_bq" jdbcType="VARCHAR" />
+		<result column="wd_ll" property="wd_ll" jdbcType="INTEGER" />
+		<result column="wd_tp" property="wd_tp" jdbcType="VARCHAR" />
+		<result column="wd_fl_id" property="wd_fl_id" jdbcType="INTEGER" />
+		<result column="wd_jf" property="wd_jf" jdbcType="INTEGER" />
+		<result column="wd_cn" property="wd_cn" jdbcType="VARCHAR" />
+		<result column="user_id" property="user_id" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="HybMap" type="org.itjl.fl.Hyb">
+		<result column="user_name" property="user_name" jdbcType="VARCHAR" />
+		<result column="user_tx" property="user_tx" jdbcType="VARCHAR" />
+		<result column="count" property="count" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="org.itjl.model.Wd"
+		extends="BaseResultMap">
+		<result column="wd_nr" property="wd_nr" jdbcType="LONGVARCHAR" />
+		<association property="user" column="user" javaType="org.itjl.model.User">
+			<id property="user_id" column="user_id" />
+			<result property="user_name" column="user_name" />
+		</association>
+		<association property="wd_fl" column="wd_fl"
+			javaType="org.itjl.model.Wd_fl">
+			<id property="wd_fl_id" column="wd_fl_id" />
+			<result property="wd_fl_name" column="wd_fl_name" />
+		</association>
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		wd_id, wd_bt, wd_time, wd_bq, wd_ll, wd_tp, w.wd_fl_id,
+		wd_jf, wd_cn, u.user_id,user_name,wd_fl_name
+	</sql>
+	<sql id="Blob_Column_List">
+		wd_nr
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="org.itjl.model.WdCriteria">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from wd w left join user u on w.user_id=u.user_id left join wd_fl wd
+		on wd.wd_fl_id=w.wd_fl_id
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="selectByFlid" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from wd w left join user u on w.user_id=u.user_id left join wd_fl wd
+		on wd.wd_fl_id=w.wd_fl_id
+		where 1=1
+
+		<if test="wd_bt != 'zero'">
+			and wd_bt like "%"#{wd_bt} "%"
+		</if>
+		<if test="wd_fl_id != 0">
+			and w.wd_fl_id = #{wd_fl_id}
+		</if>
+	</select>
+	
+	<select id="selectByUser" resultMap="HybMap">
+		select user_tx,user_name, count(*) as count from wd,user u GROUP BY u.user_id ORDER BY count desc limit 10 
+	</select>
+
+
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="org.itjl.model.WdCriteria">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from wd
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from wd w left join user u on w.user_id=u.user_id left join wd_fl wd
+		on wd.wd_fl_id=w.wd_fl_id
+		where wd_id = #{wd_id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from wd
+		where wd_id = #{wd_id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="org.itjl.model.WdCriteria">
+		delete from wd
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="org.itjl.model.Wd">
+		insert into wd (wd_id, wd_bt,
+		wd_time,
+		wd_bq, wd_ll, wd_tp,
+		wd_fl_id, wd_jf, wd_cn,
+		user_id, wd_nr)
+		values (#{wd_id,jdbcType=INTEGER}, #{wd_bt,jdbcType=VARCHAR},
+		#{wd_time,jdbcType=DATE},
+		#{wd_bq,jdbcType=VARCHAR},
+		#{wd_ll,jdbcType=INTEGER}, #{wd_tp,jdbcType=VARCHAR},
+		#{wd_fl_id,jdbcType=INTEGER}, #{wd_jf,jdbcType=INTEGER},
+		#{wd_cn,jdbcType=VARCHAR},
+		#{user_id,jdbcType=INTEGER},
+		#{wd_nr,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="org.itjl.model.Wd">
+		insert into wd
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="wd_id != null">
+				wd_id,
+			</if>
+			<if test="wd_bt != null">
+				wd_bt,
+			</if>
+			<if test="wd_time != null">
+				wd_time,
+			</if>
+			<if test="wd_bq != null">
+				wd_bq,
+			</if>
+			<if test="wd_ll != null">
+				wd_ll,
+			</if>
+			<if test="wd_tp != null">
+				wd_tp,
+			</if>
+			<if test="wd_fl_id != null">
+				wd_fl_id,
+			</if>
+			<if test="wd_jf != null">
+				wd_jf,
+			</if>
+			<if test="wd_cn != null">
+				wd_cn,
+			</if>
+			<if test="user_id != null">
+				user_id,
+			</if>
+			<if test="wd_nr != null">
+				wd_nr,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="wd_id != null">
+				#{wd_id,jdbcType=INTEGER},
+			</if>
+			<if test="wd_bt != null">
+				#{wd_bt,jdbcType=VARCHAR},
+			</if>
+			<if test="wd_time != null">
+				#{wd_time,jdbcType=DATE},
+			</if>
+			<if test="wd_bq != null">
+				#{wd_bq,jdbcType=VARCHAR},
+			</if>
+			<if test="wd_ll != null">
+				#{wd_ll,jdbcType=INTEGER},
+			</if>
+			<if test="wd_tp != null">
+				#{wd_tp,jdbcType=VARCHAR},
+			</if>
+			<if test="wd_fl_id != null">
+				#{wd_fl_id,jdbcType=INTEGER},
+			</if>
+			<if test="wd_jf != null">
+				#{wd_jf,jdbcType=INTEGER},
+			</if>
+			<if test="wd_cn != null">
+				#{wd_cn,jdbcType=VARCHAR},
+			</if>
+			<if test="user_id != null">
+				#{user_id,jdbcType=INTEGER},
+			</if>
+			<if test="wd_nr != null">
+				#{wd_nr,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="org.itjl.model.WdCriteria"
+		resultType="java.lang.Integer">
+		select count(*) from wd
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update wd
+		<set>
+			<if test="record.wd_id != null">
+				wd_id = #{record.wd_id,jdbcType=INTEGER},
+			</if>
+			<if test="record.wd_bt != null">
+				wd_bt = #{record.wd_bt,jdbcType=VARCHAR},
+			</if>
+			<if test="record.wd_time != null">
+				wd_time = #{record.wd_time,jdbcType=DATE},
+			</if>
+			<if test="record.wd_bq != null">
+				wd_bq = #{record.wd_bq,jdbcType=VARCHAR},
+			</if>
+			<if test="record.wd_ll != null">
+				wd_ll = #{record.wd_ll,jdbcType=INTEGER},
+			</if>
+			<if test="record.wd_tp != null">
+				wd_tp = #{record.wd_tp,jdbcType=VARCHAR},
+			</if>
+			<if test="record.wd_fl_id != null">
+				wd_fl_id = #{record.wd_fl_id,jdbcType=INTEGER},
+			</if>
+			<if test="record.wd_jf != null">
+				wd_jf = #{record.wd_jf,jdbcType=INTEGER},
+			</if>
+			<if test="record.wd_cn != null">
+				wd_cn = #{record.wd_cn,jdbcType=VARCHAR},
+			</if>
+			<if test="record.user_id != null">
+				user_id = #{record.user_id,jdbcType=INTEGER},
+			</if>
+			<if test="record.wd_nr != null">
+				wd_nr = #{record.wd_nr,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update wd
+		set wd_id = #{record.wd_id,jdbcType=INTEGER},
+		wd_bt =
+		#{record.wd_bt,jdbcType=VARCHAR},
+		wd_time =
+		#{record.wd_time,jdbcType=DATE},
+		wd_bq =
+		#{record.wd_bq,jdbcType=VARCHAR},
+		wd_ll =
+		#{record.wd_ll,jdbcType=INTEGER},
+		wd_tp =
+		#{record.wd_tp,jdbcType=VARCHAR},
+		wd_fl_id =
+		#{record.wd_fl_id,jdbcType=INTEGER},
+		wd_jf =
+		#{record.wd_jf,jdbcType=INTEGER},
+		wd_cn =
+		#{record.wd_cn,jdbcType=VARCHAR},
+		user_id =
+		#{record.user_id,jdbcType=INTEGER},
+		wd_nr =
+		#{record.wd_nr,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update wd
+		set wd_id = #{record.wd_id,jdbcType=INTEGER},
+		wd_bt =
+		#{record.wd_bt,jdbcType=VARCHAR},
+		wd_time =
+		#{record.wd_time,jdbcType=DATE},
+		wd_bq =
+		#{record.wd_bq,jdbcType=VARCHAR},
+		wd_ll =
+		#{record.wd_ll,jdbcType=INTEGER},
+		wd_tp =
+		#{record.wd_tp,jdbcType=VARCHAR},
+		wd_fl_id =
+		#{record.wd_fl_id,jdbcType=INTEGER},
+		wd_jf =
+		#{record.wd_jf,jdbcType=INTEGER},
+		wd_cn =
+		#{record.wd_cn,jdbcType=VARCHAR},
+		user_id =
+		#{record.user_id,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="org.itjl.model.Wd">
+		update wd
+		<set>
+			<if test="wd_bt != null">
+				wd_bt = #{wd_bt,jdbcType=VARCHAR},
+			</if>
+			<if test="wd_time != null">
+				wd_time = #{wd_time,jdbcType=DATE},
+			</if>
+			<if test="wd_bq != null">
+				wd_bq = #{wd_bq,jdbcType=VARCHAR},
+			</if>
+			<if test="wd_ll != null">
+				wd_ll = #{wd_ll,jdbcType=INTEGER},
+			</if>
+			<if test="wd_tp != null">
+				wd_tp = #{wd_tp,jdbcType=VARCHAR},
+			</if>
+			<if test="wd_fl_id != null">
+				wd_fl_id = #{wd_fl_id,jdbcType=INTEGER},
+			</if>
+			<if test="wd_jf != null">
+				wd_jf = #{wd_jf,jdbcType=INTEGER},
+			</if>
+			<if test="wd_cn != null">
+				wd_cn = #{wd_cn,jdbcType=VARCHAR},
+			</if>
+			<if test="user_id != null">
+				user_id = #{user_id,jdbcType=INTEGER},
+			</if>
+			<if test="wd_nr != null">
+				wd_nr = #{wd_nr,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where wd_id = #{wd_id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="org.itjl.model.Wd">
+		update wd
+		set wd_bt = #{wd_bt,jdbcType=VARCHAR},
+		wd_time =
+		#{wd_time,jdbcType=DATE},
+		wd_bq = #{wd_bq,jdbcType=VARCHAR},
+		wd_ll =
+		#{wd_ll,jdbcType=INTEGER},
+		wd_tp = #{wd_tp,jdbcType=VARCHAR},
+		wd_fl_id =
+		#{wd_fl_id,jdbcType=INTEGER},
+		wd_jf = #{wd_jf,jdbcType=INTEGER},
+		wd_cn =
+		#{wd_cn,jdbcType=VARCHAR},
+		user_id = #{user_id,jdbcType=INTEGER},
+		wd_nr
+		= #{wd_nr,jdbcType=LONGVARCHAR}
+		where wd_id = #{wd_id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.itjl.model.Wd">
+		update wd
+		set wd_bt
+		= #{wd_bt,jdbcType=VARCHAR},
+		wd_time = #{wd_time,jdbcType=DATE},
+		wd_bq =
+		#{wd_bq,jdbcType=VARCHAR},
+		wd_ll = #{wd_ll,jdbcType=INTEGER},
+		wd_tp =
+		#{wd_tp,jdbcType=VARCHAR},
+		wd_fl_id = #{wd_fl_id,jdbcType=INTEGER},
+		wd_jf = #{wd_jf,jdbcType=INTEGER},
+		wd_cn = #{wd_cn,jdbcType=VARCHAR},
+		user_id = #{user_id,jdbcType=INTEGER}
+		where wd_id =
+		#{wd_id,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.User_groupMapper" >
+  <resultMap id="BaseResultMap" type="org.itjl.model.User_group" >
+    <id column="user_group_id" property="user_group_id" jdbcType="INTEGER" />
+    <result column="user_group_group_id" property="user_group_group_id" jdbcType="INTEGER" />
+    <result column="user_group_user_id" property="user_group_user_id" jdbcType="INTEGER" />
+    <result column="user_group_name" property="user_group_name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_group_id, user_group_group_id, user_group_user_id, user_group_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.itjl.model.User_groupCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_group
+    where user_group_id = #{user_group_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_group
+    where user_group_id = #{user_group_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.itjl.model.User_groupCriteria" >
+    delete from user_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.itjl.model.User_group" >
+    insert into user_group (user_group_id, user_group_group_id, 
+      user_group_user_id, user_group_name)
+    values (#{user_group_id,jdbcType=INTEGER}, #{user_group_group_id,jdbcType=INTEGER}, 
+      #{user_group_user_id,jdbcType=INTEGER}, #{user_group_name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.itjl.model.User_group" >
+    insert into user_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="user_group_id != null" >
+        user_group_id,
+      </if>
+      <if test="user_group_group_id != null" >
+        user_group_group_id,
+      </if>
+      <if test="user_group_user_id != null" >
+        user_group_user_id,
+      </if>
+      <if test="user_group_name != null" >
+        user_group_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="user_group_id != null" >
+        #{user_group_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_group_group_id != null" >
+        #{user_group_group_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_group_user_id != null" >
+        #{user_group_user_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_group_name != null" >
+        #{user_group_name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.itjl.model.User_groupCriteria" resultType="java.lang.Integer" >
+    select count(*) from user_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_group
+    <set >
+      <if test="record.user_group_id != null" >
+        user_group_id = #{record.user_group_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.user_group_group_id != null" >
+        user_group_group_id = #{record.user_group_group_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.user_group_user_id != null" >
+        user_group_user_id = #{record.user_group_user_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.user_group_name != null" >
+        user_group_name = #{record.user_group_name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_group
+    set user_group_id = #{record.user_group_id,jdbcType=INTEGER},
+      user_group_group_id = #{record.user_group_group_id,jdbcType=INTEGER},
+      user_group_user_id = #{record.user_group_user_id,jdbcType=INTEGER},
+      user_group_name = #{record.user_group_name,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.itjl.model.User_group" >
+    update user_group
+    <set >
+      <if test="user_group_group_id != null" >
+        user_group_group_id = #{user_group_group_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_group_user_id != null" >
+        user_group_user_id = #{user_group_user_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_group_name != null" >
+        user_group_name = #{user_group_name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_group_id = #{user_group_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.itjl.model.User_group" >
+    update user_group
+    set user_group_group_id = #{user_group_group_id,jdbcType=INTEGER},
+      user_group_user_id = #{user_group_user_id,jdbcType=INTEGER},
+      user_group_name = #{user_group_name,jdbcType=VARCHAR}
+    where user_group_id = #{user_group_id,jdbcType=INTEGER}
+  </update>
+</mapper>

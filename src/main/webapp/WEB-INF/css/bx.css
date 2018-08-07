@@ -1,0 +1,127 @@
+body {
+    background-color: #f4f4f4;
+}
+
+a {
+    color: inherit;
+    cursor: pointer;
+
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.breadcrumb {
+    height: 40px;
+    background-color: #fff;
+}
+
+.fgh {
+    width: 100%;
+    height: 10px;
+    background-color: #f4f4f4;
+}
+
+
+.bxzt{
+    height: 1500px;
+    margin-top: -15px;
+     background-color: #fff;
+}
+
+.bxzt_l{
+    height: 100%;
+    border-right: solid 2px #f4f4f4;
+    padding: 10px 0px;
+}
+
+.hs {
+    color: #7b7c7c;
+}
+
+.bxzt_l_fl{
+    cursor: pointer;
+}
+
+
+.bxzt_l_fl{
+    width: 100%;
+    height: 40px;
+    margin: 0px 0px;
+    line-height: 40px;
+    font-size: 15px;
+}
+
+.bxzt_l_fl:hover{
+    color: #fff;
+    background-color:cornflowerblue;
+}
+
+.bxzt_l_fl_hover{
+    color: #fff;
+    background-color:cornflowerblue;
+}
+.bxzt_r{
+    height: 100%;
+    padding: 10px 0px;
+    float: right;
+    padding: 20px;
+}
+
+.bxzt_r_top{
+    width: 100%;
+    height: 50px;
+}
+
+.btn-default{
+    width:130px;
+}
+
+.srk{
+    width: 100%;
+    height: 700px;
+}
+
+.editor{
+    min-height:600px;
+}
+
+.wzcs{
+    height: auto;
+}
+
+.lable{
+    line-height: 35px;
+    font-size: 20px;
+    color: darkcyan;
+}
+
+
+.cgx_a{
+    height: 70px;
+    border-bottom: solid 1px #f4f4f4;
+}
+
+.cgx_a:hover{
+    background-color:#f4f4f4;
+    
+}
+

@@ -1,0 +1,83 @@
+body {
+    background-color: #eeeeee;
+}
+
+
+a {
+    color: inherit;
+    cursor: pointer;
+
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+
+.header_show {
+    width: 100%;
+    height: 50px;
+    background-color: #3d444c;
+}
+
+
+.header_a_center {
+    height: 50px;
+    line-height: 50px;
+    color: #cccccc;
+    font-size: 15px;
+}
+
+.header_a_center_div:hover {
+    font-size: 14px;
+    cursor: pointer;
+     color: #ffffff;
+}
+
+.header_tc:hover{
+	color:#169fe6
+}
+
+
+#myModal {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 70%;
+    /*这个比例可以自己按需调节*/
+}
+
+.kh {
+    width: 100%;
+    height: 10px;
+}
+
+.dlk_wz {
+    color: darkgray;
+    font-size: 14px;
+    cursor: pointer;
+    padding-left: 20px;
+    line-height: 30px;
+}
+
+.dlk_wz:hover {
+    font-size: 16px;
+    color: #31b0d5;
+}

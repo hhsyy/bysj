@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.ZpMapper" >
+  <resultMap id="BaseResultMap" type="org.itjl.model.Zp" >
+    <id column="zp_id" property="zp_id" jdbcType="INTEGER" />
+    <result column="zp_bt" property="zp_bt" jdbcType="VARCHAR" />
+    <result column="zp_time" property="zp_time" jdbcType="DATE" />
+    <result column="zp_ll" property="zp_ll" jdbcType="INTEGER" />
+    <result column="zp_ylt" property="zp_ylt" jdbcType="VARCHAR" />
+    <result column="zp_jf" property="zp_jf" jdbcType="INTEGER" />
+    <result column="group_id" property="group_id" jdbcType="INTEGER" />
+    <result column="zp_tag" property="zp_tag" jdbcType="VARCHAR" />
+    <result column="zp_wj" property="zp_wj" jdbcType="VARCHAR" />
+    	<association property="groupg" column="groupg" javaType="org.itjl.model.Groupg">
+			<id property="group_id" column="group_id" />
+			<result property="group_name" column="group_name" />
+			<result property="group_tx" column="group_tx" />
+		</association>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.itjl.model.Zp" extends="BaseResultMap" >
+    <result column="zp_ms" property="zp_ms" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    zp_id, zp_bt, zp_time, zp_ll, zp_ylt, zp_jf, g.group_id, zp_tag, zp_wj,g.group_name
+  </sql>
+  <sql id="Blob_Column_List" >
+    zp_ms
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.itjl.model.ZpCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zp z left join groupg g on g.group_id=z.group_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.itjl.model.ZpCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from zp z left join groupg g on g.group_id=z.group_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zp z left join groupg g on g.group_id=z.group_id
+    where zp_id = #{zp_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zp
+    where zp_id = #{zp_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.itjl.model.ZpCriteria" >
+    delete from zp
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.itjl.model.Zp" >
+    insert into zp (zp_id, zp_bt, zp_time, 
+      zp_ll, zp_ylt, zp_jf, 
+      group_id, zp_tag, zp_wj, 
+      zp_ms)
+    values (#{zp_id,jdbcType=INTEGER}, #{zp_bt,jdbcType=VARCHAR}, #{zp_time,jdbcType=DATE}, 
+      #{zp_ll,jdbcType=INTEGER}, #{zp_ylt,jdbcType=VARCHAR}, #{zp_jf,jdbcType=INTEGER}, 
+      #{group_id,jdbcType=INTEGER}, #{zp_tag,jdbcType=VARCHAR}, #{zp_wj,jdbcType=VARCHAR}, 
+      #{zp_ms,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.itjl.model.Zp" >
+    insert into zp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="zp_id != null" >
+        zp_id,
+      </if>
+      <if test="zp_bt != null" >
+        zp_bt,
+      </if>
+      <if test="zp_time != null" >
+        zp_time,
+      </if>
+      <if test="zp_ll != null" >
+        zp_ll,
+      </if>
+      <if test="zp_ylt != null" >
+        zp_ylt,
+      </if>
+      <if test="zp_jf != null" >
+        zp_jf,
+      </if>
+      <if test="group_id != null" >
+        group_id,
+      </if>
+      <if test="zp_tag != null" >
+        zp_tag,
+      </if>
+      <if test="zp_wj != null" >
+        zp_wj,
+      </if>
+      <if test="zp_ms != null" >
+        zp_ms,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="zp_id != null" >
+        #{zp_id,jdbcType=INTEGER},
+      </if>
+      <if test="zp_bt != null" >
+        #{zp_bt,jdbcType=VARCHAR},
+      </if>
+      <if test="zp_time != null" >
+        #{zp_time,jdbcType=DATE},
+      </if>
+      <if test="zp_ll != null" >
+        #{zp_ll,jdbcType=INTEGER},
+      </if>
+      <if test="zp_ylt != null" >
+        #{zp_ylt,jdbcType=VARCHAR},
+      </if>
+      <if test="zp_jf != null" >
+        #{zp_jf,jdbcType=INTEGER},
+      </if>
+      <if test="group_id != null" >
+        #{group_id,jdbcType=INTEGER},
+      </if>
+      <if test="zp_tag != null" >
+        #{zp_tag,jdbcType=VARCHAR},
+      </if>
+      <if test="zp_wj != null" >
+        #{zp_wj,jdbcType=VARCHAR},
+      </if>
+      <if test="zp_ms != null" >
+        #{zp_ms,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.itjl.model.ZpCriteria" resultType="java.lang.Integer" >
+    select count(*) from zp
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update zp
+    <set >
+      <if test="record.zp_id != null" >
+        zp_id = #{record.zp_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.zp_bt != null" >
+        zp_bt = #{record.zp_bt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zp_time != null" >
+        zp_time = #{record.zp_time,jdbcType=DATE},
+      </if>
+      <if test="record.zp_ll != null" >
+        zp_ll = #{record.zp_ll,jdbcType=INTEGER},
+      </if>
+      <if test="record.zp_ylt != null" >
+        zp_ylt = #{record.zp_ylt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zp_jf != null" >
+        zp_jf = #{record.zp_jf,jdbcType=INTEGER},
+      </if>
+      <if test="record.group_id != null" >
+        group_id = #{record.group_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.zp_tag != null" >
+        zp_tag = #{record.zp_tag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zp_wj != null" >
+        zp_wj = #{record.zp_wj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zp_ms != null" >
+        zp_ms = #{record.zp_ms,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update zp
+    set zp_id = #{record.zp_id,jdbcType=INTEGER},
+      zp_bt = #{record.zp_bt,jdbcType=VARCHAR},
+      zp_time = #{record.zp_time,jdbcType=DATE},
+      zp_ll = #{record.zp_ll,jdbcType=INTEGER},
+      zp_ylt = #{record.zp_ylt,jdbcType=VARCHAR},
+      zp_jf = #{record.zp_jf,jdbcType=INTEGER},
+      group_id = #{record.group_id,jdbcType=INTEGER},
+      zp_tag = #{record.zp_tag,jdbcType=VARCHAR},
+      zp_wj = #{record.zp_wj,jdbcType=VARCHAR},
+      zp_ms = #{record.zp_ms,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update zp
+    set zp_id = #{record.zp_id,jdbcType=INTEGER},
+      zp_bt = #{record.zp_bt,jdbcType=VARCHAR},
+      zp_time = #{record.zp_time,jdbcType=DATE},
+      zp_ll = #{record.zp_ll,jdbcType=INTEGER},
+      zp_ylt = #{record.zp_ylt,jdbcType=VARCHAR},
+      zp_jf = #{record.zp_jf,jdbcType=INTEGER},
+      group_id = #{record.group_id,jdbcType=INTEGER},
+      zp_tag = #{record.zp_tag,jdbcType=VARCHAR},
+      zp_wj = #{record.zp_wj,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.itjl.model.Zp" >
+    update zp
+    <set >
+      <if test="zp_bt != null" >
+        zp_bt = #{zp_bt,jdbcType=VARCHAR},
+      </if>
+      <if test="zp_time != null" >
+        zp_time = #{zp_time,jdbcType=DATE},
+      </if>
+      <if test="zp_ll != null" >
+        zp_ll = #{zp_ll,jdbcType=INTEGER},
+      </if>
+      <if test="zp_ylt != null" >
+        zp_ylt = #{zp_ylt,jdbcType=VARCHAR},
+      </if>
+      <if test="zp_jf != null" >
+        zp_jf = #{zp_jf,jdbcType=INTEGER},
+      </if>
+      <if test="group_id != null" >
+        group_id = #{group_id,jdbcType=INTEGER},
+      </if>
+      <if test="zp_tag != null" >
+        zp_tag = #{zp_tag,jdbcType=VARCHAR},
+      </if>
+      <if test="zp_wj != null" >
+        zp_wj = #{zp_wj,jdbcType=VARCHAR},
+      </if>
+      <if test="zp_ms != null" >
+        zp_ms = #{zp_ms,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where zp_id = #{zp_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.itjl.model.Zp" >
+    update zp
+    set zp_bt = #{zp_bt,jdbcType=VARCHAR},
+      zp_time = #{zp_time,jdbcType=DATE},
+      zp_ll = #{zp_ll,jdbcType=INTEGER},
+      zp_ylt = #{zp_ylt,jdbcType=VARCHAR},
+      zp_jf = #{zp_jf,jdbcType=INTEGER},
+      group_id = #{group_id,jdbcType=INTEGER},
+      zp_tag = #{zp_tag,jdbcType=VARCHAR},
+      zp_wj = #{zp_wj,jdbcType=VARCHAR},
+      zp_ms = #{zp_ms,jdbcType=LONGVARCHAR}
+    where zp_id = #{zp_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.itjl.model.Zp" >
+    update zp
+    set zp_bt = #{zp_bt,jdbcType=VARCHAR},
+      zp_time = #{zp_time,jdbcType=DATE},
+      zp_ll = #{zp_ll,jdbcType=INTEGER},
+      zp_ylt = #{zp_ylt,jdbcType=VARCHAR},
+      zp_jf = #{zp_jf,jdbcType=INTEGER},
+      group_id = #{group_id,jdbcType=INTEGER},
+      zp_tag = #{zp_tag,jdbcType=VARCHAR},
+      zp_wj = #{zp_wj,jdbcType=VARCHAR}
+    where zp_id = #{zp_id,jdbcType=INTEGER}
+  </update>
+</mapper>

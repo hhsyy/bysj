@@ -1,0 +1,186 @@
+body {
+    background-color: #f4f4f4;
+}
+
+a {
+    color: inherit;
+    cursor: pointer;
+
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+.breadcrumb {
+    width: 100%;
+    height: 40px;
+    background-color: #fff;
+}
+
+
+.dhl_tp {
+    width: 100%;
+    height: 100px;
+    background-image: url(../images/zc/rl_top.35edfde.png);
+}
+
+.zt {
+    width: 100%;
+    height: auto;
+}
+
+.zt_l {
+    height: 100%;
+    background-color: #fff;
+}
+
+.lbt {
+    height: 100%;
+    padding:15px 0px ;
+}
+
+.fgh{
+    height: 10px;
+    background-color: #f4f4f4;
+}
+
+.dhl_l{
+    height: 30px;
+   padding-top:2%;
+}
+
+
+.dhl_l_zt{
+    font-size: 18px;
+}
+
+.dhl_l_zt:hover{
+    color:#00A0D8;
+    cursor: pointer;
+}
+.dhl_l_zt_hover{
+    color:#00A0D8;
+    cursor: pointer;
+}
+
+.zsnr{
+    width: 100%;
+    height: 130px;
+    padding:10px 20px;
+}
+.zsnr_z{
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.zsnr_x{
+	margin-top: 5px;
+}
+
+
+.zsnr_kj{
+   padding:10px 10px;
+     width: 100%;
+    height: 100%;
+}
+
+.zsnr_kj:hover{
+    background-color: #f4f4f4;
+}
+
+
+.zsnr_bt{
+    height: 30px;
+    font-size: 17px;
+    	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
+.hs{
+  color: #7b7c7c;
+}
+
+.nrzs_r_tx{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 5%;
+}
+
+.nrzs_r_tx:hover{
+     border-radius: 30%;
+}
+
+.dhl_r{
+    height: auto;
+     background-color: #fff;
+}
+
+.jptj{
+    padding: 0px 5% ;
+}
+
+.dhl_r_nr{
+    padding: 20px;
+}
+
+.media{
+    width: 100%;
+    height: 50px;
+    overflow: hidden;
+}
+
+.sjtj
+{
+    height: auto;
+}
+
+.sjtj_tx{
+    width: 50px;
+    height: 40px;
+}
+.gdrq
+{
+     width: 100%;
+    height: 400px;
+}
+
+.fhan {
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    padding: 5px;
+}
+
+.fhan_kj {
+    width: 100%;
+    height: 100%;
+    line-height: 35px;
+    border: solid 2px #f4f4f4;
+}
+
+.fhan_kj:hover {
+    cursor: pointer;
+    font-size: 17px;
+}

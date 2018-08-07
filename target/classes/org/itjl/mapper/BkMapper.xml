@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.BkMapper">
+	<resultMap id="BaseResultMap" type="org.itjl.model.Bk">
+		<id column="bk_id" property="bk_id" jdbcType="INTEGER" />
+		<result column="bk_bt" property="bk_bt" jdbcType="VARCHAR" />
+		<result column="lb_id" property="lb_id" jdbcType="INTEGER" />
+		<result column="bk_date" property="bk_date" jdbcType="DATE" />
+		<result column="bk_ll" property="bk_ll" jdbcType="INTEGER" />
+		<result column="bk_tjl" property="bk_tjl" jdbcType="INTEGER" />
+		<result column="user_id" property="user_id" jdbcType="INTEGER" />
+		<result column="bk_zt" property="bk_zt" jdbcType="INTEGER" />
+		<result column="bk_bq" property="bk_bq" jdbcType="VARCHAR" />
+		<association property="user" column="user" javaType="org.itjl.model.User">
+			<id property="user_id" column="user_id" />
+			<result property="user_name" column="user_name" />
+			<result property="user_tx" column="user_tx" />
+		</association>
+		<association property="lb" column="lb" javaType="org.itjl.model.Lb">
+			<id property="lb_id" column="lb_id" />
+			<result property="lb_name" column="lb_name" />
+		</association>
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="org.itjl.model.Bk"
+		extends="BaseResultMap">
+		<result column="bk_nr" property="bk_nr" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		bk_id, bk_bt, l.lb_id, bk_date, bk_ll, bk_tjl,bk_zt, bk_bq,
+		u.user_id,user_name,lb_name,user_tx
+	</sql>
+	<sql id="Blob_Column_List">
+		bk_nr
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="org.itjl.model.BkCriteria">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from bk
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="selectByTj" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from bk b left join user u on b.user_id=u.user_id left join lb l
+		on
+		l.lb_id=b.lb_id
+		where 1=1
+		
+		<if test="bk_bq != 'zero'">
+			and bk_bq like "%"#{bk_bq} "%"
+		</if>
+		<if test="bk_bt != 'zero'">
+			and bk_bt like "%"#{bk_bt} "%"
+		</if>
+		order by bk_date desc
+	</select>
+	
+		<select id="selectByTjl" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from bk b left join user u on b.user_id=u.user_id left join lb l
+		on
+		l.lb_id=b.lb_id
+	
+		order by bk_tjl desc
+	</select>
+
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="org.itjl.model.BkCriteria">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from bk b left join user u on b.user_id=u.user_id left join lb l
+		on
+		l.lb_id=b.lb_id
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+
+
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from bk b left join user u on b.user_id=u.user_id left join lb l
+		on
+		l.lb_id=b.lb_id
+		where bk_id = #{bk_id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from bk
+		where bk_id = #{bk_id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="org.itjl.model.BkCriteria">
+		delete from bk
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="org.itjl.model.Bk">
+		insert into bk (bk_id, bk_bt,
+		lb_id,
+		bk_date, bk_ll, bk_tjl,
+		user_id, bk_zt, bk_bq,
+		bk_nr)
+		values
+		(#{bk_id,jdbcType=INTEGER}, #{bk_bt,jdbcType=VARCHAR},
+		#{lb_id,jdbcType=INTEGER},
+		#{bk_date,jdbcType=DATE},
+		#{bk_ll,jdbcType=INTEGER}, #{bk_tjl,jdbcType=INTEGER},
+		#{user_id,jdbcType=INTEGER}, #{bk_zt,jdbcType=INTEGER},
+		#{bk_bq,jdbcType=VARCHAR},
+		#{bk_nr,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="org.itjl.model.Bk">
+		insert into bk
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bk_id != null">
+				bk_id,
+			</if>
+			<if test="bk_bt != null">
+				bk_bt,
+			</if>
+			<if test="lb_id != null">
+				lb_id,
+			</if>
+			<if test="bk_date != null">
+				bk_date,
+			</if>
+			<if test="bk_ll != null">
+				bk_ll,
+			</if>
+			<if test="bk_tjl != null">
+				bk_tjl,
+			</if>
+			<if test="user_id != null">
+				user_id,
+			</if>
+			<if test="bk_zt != null">
+				bk_zt,
+			</if>
+			<if test="bk_bq != null">
+				bk_bq,
+			</if>
+			<if test="bk_nr != null">
+				bk_nr,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bk_id != null">
+				#{bk_id,jdbcType=INTEGER},
+			</if>
+			<if test="bk_bt != null">
+				#{bk_bt,jdbcType=VARCHAR},
+			</if>
+			<if test="lb_id != null">
+				#{lb_id,jdbcType=INTEGER},
+			</if>
+			<if test="bk_date != null">
+				#{bk_date,jdbcType=DATE},
+			</if>
+			<if test="bk_ll != null">
+				#{bk_ll,jdbcType=INTEGER},
+			</if>
+			<if test="bk_tjl != null">
+				#{bk_tjl,jdbcType=INTEGER},
+			</if>
+			<if test="user_id != null">
+				#{user_id,jdbcType=INTEGER},
+			</if>
+			<if test="bk_zt != null">
+				#{bk_zt,jdbcType=INTEGER},
+			</if>
+			<if test="bk_bq != null">
+				#{bk_bq,jdbcType=VARCHAR},
+			</if>
+			<if test="bk_nr != null">
+				#{bk_nr,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="org.itjl.model.BkCriteria"
+		resultType="java.lang.Integer">
+		select count(*) from bk
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update bk
+		<set>
+			<if test="record.bk_id != null">
+				bk_id = #{record.bk_id,jdbcType=INTEGER},
+			</if>
+			<if test="record.bk_bt != null">
+				bk_bt = #{record.bk_bt,jdbcType=VARCHAR},
+			</if>
+			<if test="record.lb_id != null">
+				lb_id = #{record.lb_id,jdbcType=INTEGER},
+			</if>
+			<if test="record.bk_date != null">
+				bk_date = #{record.bk_date,jdbcType=DATE},
+			</if>
+			<if test="record.bk_ll != null">
+				bk_ll = #{record.bk_ll,jdbcType=INTEGER},
+			</if>
+			<if test="record.bk_tjl != null">
+				bk_tjl = #{record.bk_tjl,jdbcType=INTEGER},
+			</if>
+			<if test="record.user_id != null">
+				user_id = #{record.user_id,jdbcType=INTEGER},
+			</if>
+			<if test="record.bk_zt != null">
+				bk_zt = #{record.bk_zt,jdbcType=INTEGER},
+			</if>
+			<if test="record.bk_bq != null">
+				bk_bq = #{record.bk_bq,jdbcType=VARCHAR},
+			</if>
+			<if test="record.bk_nr != null">
+				bk_nr = #{record.bk_nr,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update bk
+		set bk_id = #{record.bk_id,jdbcType=INTEGER},
+		bk_bt =
+		#{record.bk_bt,jdbcType=VARCHAR},
+		lb_id =
+		#{record.lb_id,jdbcType=INTEGER},
+		bk_date =
+		#{record.bk_date,jdbcType=DATE},
+		bk_ll =
+		#{record.bk_ll,jdbcType=INTEGER},
+		bk_tjl =
+		#{record.bk_tjl,jdbcType=INTEGER},
+		user_id =
+		#{record.user_id,jdbcType=INTEGER},
+		bk_zt =
+		#{record.bk_zt,jdbcType=INTEGER},
+		bk_bq =
+		#{record.bk_bq,jdbcType=VARCHAR},
+		bk_nr =
+		#{record.bk_nr,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update bk
+		set bk_id = #{record.bk_id,jdbcType=INTEGER},
+		bk_bt =
+		#{record.bk_bt,jdbcType=VARCHAR},
+		lb_id =
+		#{record.lb_id,jdbcType=INTEGER},
+		bk_date =
+		#{record.bk_date,jdbcType=DATE},
+		bk_ll =
+		#{record.bk_ll,jdbcType=INTEGER},
+		bk_tjl =
+		#{record.bk_tjl,jdbcType=INTEGER},
+		user_id =
+		#{record.user_id,jdbcType=INTEGER},
+		bk_zt =
+		#{record.bk_zt,jdbcType=INTEGER},
+		bk_bq =
+		#{record.bk_bq,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="org.itjl.model.Bk">
+		update bk
+		<set>
+			<if test="bk_bt != null">
+				bk_bt = #{bk_bt,jdbcType=VARCHAR},
+			</if>
+			<if test="lb_id != null">
+				lb_id = #{lb_id,jdbcType=INTEGER},
+			</if>
+			<if test="bk_date != null">
+				bk_date = #{bk_date,jdbcType=DATE},
+			</if>
+			<if test="bk_ll != null">
+				bk_ll = #{bk_ll,jdbcType=INTEGER},
+			</if>
+			<if test="bk_tjl != null">
+				bk_tjl = #{bk_tjl,jdbcType=INTEGER},
+			</if>
+			<if test="user_id != null">
+				user_id = #{user_id,jdbcType=INTEGER},
+			</if>
+			<if test="bk_zt != null">
+				bk_zt = #{bk_zt,jdbcType=INTEGER},
+			</if>
+			<if test="bk_bq != null">
+				bk_bq = #{bk_bq,jdbcType=VARCHAR},
+			</if>
+			<if test="bk_nr != null">
+				bk_nr = #{bk_nr,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where bk_id = #{bk_id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="org.itjl.model.Bk">
+		update bk
+		set bk_bt = #{bk_bt,jdbcType=VARCHAR},
+		lb_id =
+		#{lb_id,jdbcType=INTEGER},
+		bk_date = #{bk_date,jdbcType=DATE},
+		bk_ll =
+		#{bk_ll,jdbcType=INTEGER},
+		bk_tjl = #{bk_tjl,jdbcType=INTEGER},
+		user_id
+		= #{user_id,jdbcType=INTEGER},
+		bk_zt = #{bk_zt,jdbcType=INTEGER},
+		bk_bq
+		= #{bk_bq,jdbcType=VARCHAR},
+		bk_nr = #{bk_nr,jdbcType=LONGVARCHAR}
+		where bk_id = #{bk_id,jdbcType=INTEGER}
+	</update>
+		<update id="updateTjl">
+	update bk
+	set bk_tjl
+	= #{bk_tjl,jdbcType=INTEGER}
+	where bk_id = #{bk_id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.itjl.model.Bk">
+		update bk
+		set bk_bt
+		= #{bk_bt,jdbcType=VARCHAR},
+		lb_id = #{lb_id,jdbcType=INTEGER},
+		bk_date
+		= #{bk_date,jdbcType=DATE},
+		bk_ll = #{bk_ll,jdbcType=INTEGER},
+		bk_tjl =
+		#{bk_tjl,jdbcType=INTEGER},
+		user_id = #{user_id,jdbcType=INTEGER},
+		bk_zt = #{bk_zt,jdbcType=INTEGER},
+		bk_bq = #{bk_bq,jdbcType=VARCHAR}
+		where bk_id = #{bk_id,jdbcType=INTEGER}
+	</update>
+</mapper>

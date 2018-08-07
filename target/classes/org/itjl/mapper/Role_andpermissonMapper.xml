@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.Role_andpermissonMapper" >
+  <resultMap id="BaseResultMap" type="org.itjl.model.Role_andpermisson" >
+    <id column="role_andpermisson_id" property="role_andpermisson_id" jdbcType="INTEGER" />
+    <result column="user_permisson_id" property="user_permisson_id" jdbcType="INTEGER" />
+    <result column="user_role_id" property="user_role_id" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    role_andpermisson_id, user_permisson_id, user_role_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.itjl.model.Role_andpermissonCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from role_andpermisson
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from role_andpermisson
+    where role_andpermisson_id = #{role_andpermisson_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role_andpermisson
+    where role_andpermisson_id = #{role_andpermisson_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.itjl.model.Role_andpermissonCriteria" >
+    delete from role_andpermisson
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.itjl.model.Role_andpermisson" >
+    insert into role_andpermisson (role_andpermisson_id, user_permisson_id, 
+      user_role_id)
+    values (#{role_andpermisson_id,jdbcType=INTEGER}, #{user_permisson_id,jdbcType=INTEGER}, 
+      #{user_role_id,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.itjl.model.Role_andpermisson" >
+    insert into role_andpermisson
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="role_andpermisson_id != null" >
+        role_andpermisson_id,
+      </if>
+      <if test="user_permisson_id != null" >
+        user_permisson_id,
+      </if>
+      <if test="user_role_id != null" >
+        user_role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="role_andpermisson_id != null" >
+        #{role_andpermisson_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_permisson_id != null" >
+        #{user_permisson_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_role_id != null" >
+        #{user_role_id,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.itjl.model.Role_andpermissonCriteria" resultType="java.lang.Integer" >
+    select count(*) from role_andpermisson
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update role_andpermisson
+    <set >
+      <if test="record.role_andpermisson_id != null" >
+        role_andpermisson_id = #{record.role_andpermisson_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.user_permisson_id != null" >
+        user_permisson_id = #{record.user_permisson_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.user_role_id != null" >
+        user_role_id = #{record.user_role_id,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update role_andpermisson
+    set role_andpermisson_id = #{record.role_andpermisson_id,jdbcType=INTEGER},
+      user_permisson_id = #{record.user_permisson_id,jdbcType=INTEGER},
+      user_role_id = #{record.user_role_id,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.itjl.model.Role_andpermisson" >
+    update role_andpermisson
+    <set >
+      <if test="user_permisson_id != null" >
+        user_permisson_id = #{user_permisson_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_role_id != null" >
+        user_role_id = #{user_role_id,jdbcType=INTEGER},
+      </if>
+    </set>
+    where role_andpermisson_id = #{role_andpermisson_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.itjl.model.Role_andpermisson" >
+    update role_andpermisson
+    set user_permisson_id = #{user_permisson_id,jdbcType=INTEGER},
+      user_role_id = #{user_role_id,jdbcType=INTEGER}
+    where role_andpermisson_id = #{role_andpermisson_id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.ZxMapper" >
+  <resultMap id="BaseResultMap" type="org.itjl.model.Zx" >
+    <id column="zx_id" property="zx_id" jdbcType="INTEGER" />
+    <result column="zx_bt" property="zx_bt" jdbcType="VARCHAR" />
+    <result column="zx_date" property="zx_date" jdbcType="DATE" />
+    <result column="zx_ll" property="zx_ll" jdbcType="INTEGER" />
+    <result column="zx_lb_id" property="zx_lb_id" jdbcType="INTEGER" />
+    <result column="zx_tp" property="zx_tp" jdbcType="VARCHAR" />
+    <result column="zx_bq" property="zx_bq" jdbcType="VARCHAR" />
+    <result column="lb_id" property="lb_id" jdbcType="INTEGER" />
+    <result column="user_id" property="user_id" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.itjl.model.Zx" extends="BaseResultMap" >
+    <result column="zx_nr" property="zx_nr" jdbcType="LONGVARCHAR" />
+    <association property="user" column="user" javaType="org.itjl.model.User">
+			<id property="user_id" column="user_id" />
+			<result property="user_name" column="user_name" />
+			<result property="user_tx" column="user_tx" />
+		</association>
+		  <association property="zx_lb" column="zx_lb" javaType="org.itjl.model.Zx_lb">
+			<id property="zx_lb_id" column="zx_lb_id" />
+			<result property="zx_lb_name" column="zx_lb_name" />
+		</association>
+		
+		 <association property="lb" column="lb" javaType="org.itjl.model.Lb">
+			<id property="lb_id" column="lb_id" />
+			<result property="lb_name" column="lb_name" />
+		</association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    zx_id, zx_bt, zx_date, zx_ll, z.zx_lb_id, zx_tp, zx_bq, l.lb_id, u.user_id,user_name,user_tx,lb_name
+  </sql>
+  <sql id="Blob_Column_List" >
+    zx_nr
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="org.itjl.model.ZxCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zx
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectByTj" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from zx z left join user u on z.user_id=u.user_id left join zx_lb zx
+		on z.zx_lb_id=zx.zx_lb_id left join lb l
+		on l.lb_id=z.lb_id
+		where 1=1
+		<if test="zx_bt != 'zero'">
+			and zx_bt like "%"#{zx_bt} "%"
+		</if>
+		<if test="zx_lb_id != 0">
+			and z.zx_lb_id = #{zx_lb_id}
+		</if>
+		order by zx_date desc
+	</select>
+	
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.itjl.model.ZxCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from zx
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zx z left join user u on z.user_id=u.user_id left join zx_lb zx
+		on z.zx_lb_id=zx.zx_lb_id left join lb l
+		on l.lb_id=z.lb_id
+    where zx_id = #{zx_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zx
+    where zx_id = #{zx_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.itjl.model.ZxCriteria" >
+    delete from zx
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.itjl.model.Zx" >
+    insert into zx (zx_id, zx_bt, zx_date, 
+      zx_ll, zx_lb_id, zx_tp, 
+      zx_bq, lb_id, user_id, 
+      zx_nr)
+    values (#{zx_id,jdbcType=INTEGER}, #{zx_bt,jdbcType=VARCHAR}, #{zx_date,jdbcType=DATE}, 
+      #{zx_ll,jdbcType=INTEGER}, #{zx_lb_id,jdbcType=INTEGER}, #{zx_tp,jdbcType=VARCHAR}, 
+      #{zx_bq,jdbcType=VARCHAR}, #{lb_id,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, 
+      #{zx_nr,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.itjl.model.Zx" >
+    insert into zx
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="zx_id != null" >
+        zx_id,
+      </if>
+      <if test="zx_bt != null" >
+        zx_bt,
+      </if>
+      <if test="zx_date != null" >
+        zx_date,
+      </if>
+      <if test="zx_ll != null" >
+        zx_ll,
+      </if>
+      <if test="zx_lb_id != null" >
+        zx_lb_id,
+      </if>
+      <if test="zx_tp != null" >
+        zx_tp,
+      </if>
+      <if test="zx_bq != null" >
+        zx_bq,
+      </if>
+      <if test="lb_id != null" >
+        lb_id,
+      </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
+      <if test="zx_nr != null" >
+        zx_nr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="zx_id != null" >
+        #{zx_id,jdbcType=INTEGER},
+      </if>
+      <if test="zx_bt != null" >
+        #{zx_bt,jdbcType=VARCHAR},
+      </if>
+      <if test="zx_date != null" >
+        #{zx_date,jdbcType=DATE},
+      </if>
+      <if test="zx_ll != null" >
+        #{zx_ll,jdbcType=INTEGER},
+      </if>
+      <if test="zx_lb_id != null" >
+        #{zx_lb_id,jdbcType=INTEGER},
+      </if>
+      <if test="zx_tp != null" >
+        #{zx_tp,jdbcType=VARCHAR},
+      </if>
+      <if test="zx_bq != null" >
+        #{zx_bq,jdbcType=VARCHAR},
+      </if>
+      <if test="lb_id != null" >
+        #{lb_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_id != null" >
+        #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="zx_nr != null" >
+        #{zx_nr,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.itjl.model.ZxCriteria" resultType="java.lang.Integer" >
+    select count(*) from zx
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update zx
+    <set >
+      <if test="record.zx_id != null" >
+        zx_id = #{record.zx_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.zx_bt != null" >
+        zx_bt = #{record.zx_bt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zx_date != null" >
+        zx_date = #{record.zx_date,jdbcType=DATE},
+      </if>
+      <if test="record.zx_ll != null" >
+        zx_ll = #{record.zx_ll,jdbcType=INTEGER},
+      </if>
+      <if test="record.zx_lb_id != null" >
+        zx_lb_id = #{record.zx_lb_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.zx_tp != null" >
+        zx_tp = #{record.zx_tp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zx_bq != null" >
+        zx_bq = #{record.zx_bq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lb_id != null" >
+        lb_id = #{record.lb_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.user_id != null" >
+        user_id = #{record.user_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.zx_nr != null" >
+        zx_nr = #{record.zx_nr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update zx
+    set zx_id = #{record.zx_id,jdbcType=INTEGER},
+      zx_bt = #{record.zx_bt,jdbcType=VARCHAR},
+      zx_date = #{record.zx_date,jdbcType=DATE},
+      zx_ll = #{record.zx_ll,jdbcType=INTEGER},
+      zx_lb_id = #{record.zx_lb_id,jdbcType=INTEGER},
+      zx_tp = #{record.zx_tp,jdbcType=VARCHAR},
+      zx_bq = #{record.zx_bq,jdbcType=VARCHAR},
+      lb_id = #{record.lb_id,jdbcType=INTEGER},
+      user_id = #{record.user_id,jdbcType=INTEGER},
+      zx_nr = #{record.zx_nr,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update zx
+    set zx_id = #{record.zx_id,jdbcType=INTEGER},
+      zx_bt = #{record.zx_bt,jdbcType=VARCHAR},
+      zx_date = #{record.zx_date,jdbcType=DATE},
+      zx_ll = #{record.zx_ll,jdbcType=INTEGER},
+      zx_lb_id = #{record.zx_lb_id,jdbcType=INTEGER},
+      zx_tp = #{record.zx_tp,jdbcType=VARCHAR},
+      zx_bq = #{record.zx_bq,jdbcType=VARCHAR},
+      lb_id = #{record.lb_id,jdbcType=INTEGER},
+      user_id = #{record.user_id,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.itjl.model.Zx" >
+    update zx
+    <set >
+      <if test="zx_bt != null" >
+        zx_bt = #{zx_bt,jdbcType=VARCHAR},
+      </if>
+      <if test="zx_date != null" >
+        zx_date = #{zx_date,jdbcType=DATE},
+      </if>
+      <if test="zx_ll != null" >
+        zx_ll = #{zx_ll,jdbcType=INTEGER},
+      </if>
+      <if test="zx_lb_id != null" >
+        zx_lb_id = #{zx_lb_id,jdbcType=INTEGER},
+      </if>
+      <if test="zx_tp != null" >
+        zx_tp = #{zx_tp,jdbcType=VARCHAR},
+      </if>
+      <if test="zx_bq != null" >
+        zx_bq = #{zx_bq,jdbcType=VARCHAR},
+      </if>
+      <if test="lb_id != null" >
+        lb_id = #{lb_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_id != null" >
+        user_id = #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="zx_nr != null" >
+        zx_nr = #{zx_nr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where zx_id = #{zx_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.itjl.model.Zx" >
+    update zx
+    set zx_bt = #{zx_bt,jdbcType=VARCHAR},
+      zx_date = #{zx_date,jdbcType=DATE},
+      zx_ll = #{zx_ll,jdbcType=INTEGER},
+      zx_lb_id = #{zx_lb_id,jdbcType=INTEGER},
+      zx_tp = #{zx_tp,jdbcType=VARCHAR},
+      zx_bq = #{zx_bq,jdbcType=VARCHAR},
+      lb_id = #{lb_id,jdbcType=INTEGER},
+      user_id = #{user_id,jdbcType=INTEGER},
+      zx_nr = #{zx_nr,jdbcType=LONGVARCHAR}
+    where zx_id = #{zx_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.itjl.model.Zx" >
+    update zx
+    set zx_bt = #{zx_bt,jdbcType=VARCHAR},
+      zx_date = #{zx_date,jdbcType=DATE},
+      zx_ll = #{zx_ll,jdbcType=INTEGER},
+      zx_lb_id = #{zx_lb_id,jdbcType=INTEGER},
+      zx_tp = #{zx_tp,jdbcType=VARCHAR},
+      zx_bq = #{zx_bq,jdbcType=VARCHAR},
+      lb_id = #{lb_id,jdbcType=INTEGER},
+      user_id = #{user_id,jdbcType=INTEGER}
+    where zx_id = #{zx_id,jdbcType=INTEGER}
+  </update>
+</mapper>

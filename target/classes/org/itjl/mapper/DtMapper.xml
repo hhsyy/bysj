@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.DtMapper" >
+  <resultMap id="BaseResultMap" type="org.itjl.model.Dt" >
+    <id column="dt_id" property="dt_id" jdbcType="INTEGER" />
+    <result column="user_id" property="user_id" jdbcType="INTEGER" />
+    <result column="dt_nr" property="dt_nr" jdbcType="VARCHAR" />
+    <result column="dt_dz" property="dt_dz" jdbcType="INTEGER" />
+    <result column="dt_c" property="dt_c" jdbcType="INTEGER" />
+    <result column="dt_tp" property="dt_tp" jdbcType="VARCHAR" />
+    <result column="dt_sp" property="dt_sp" jdbcType="VARCHAR" />
+    <result column="dt_date" property="dt_date" jdbcType="DATE" />
+    <association property="user" column="user" javaType="org.itjl.model.User">
+			<id property="user_id" column="user_id" />
+			<result property="user_name" column="user_name" />
+			<result property="user_tx" column="user_tx" />
+		</association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    dt_id,u.user_id, dt_nr, dt_dz, dt_c, dt_tp, dt_sp, dt_date,user_name,user_tx
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.itjl.model.DtCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dt d left join user u on d.user_id=u.user_id 
+    order by dt_date desc
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dt
+    where dt_id = #{dt_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dt
+    where dt_id = #{dt_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.itjl.model.DtCriteria" >
+    delete from dt
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.itjl.model.Dt" >
+    insert into dt (dt_id, user_id, dt_nr, 
+      dt_dz, dt_c, dt_tp, 
+      dt_sp, dt_date)
+    values (#{dt_id,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, #{dt_nr,jdbcType=VARCHAR}, 
+      #{dt_dz,jdbcType=INTEGER}, #{dt_c,jdbcType=INTEGER}, #{dt_tp,jdbcType=VARCHAR}, 
+      #{dt_sp,jdbcType=VARCHAR}, #{dt_date,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="org.itjl.model.Dt" >
+    insert into dt
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dt_id != null" >
+        dt_id,
+      </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
+      <if test="dt_nr != null" >
+        dt_nr,
+      </if>
+      <if test="dt_dz != null" >
+        dt_dz,
+      </if>
+      <if test="dt_c != null" >
+        dt_c,
+      </if>
+      <if test="dt_tp != null" >
+        dt_tp,
+      </if>
+      <if test="dt_sp != null" >
+        dt_sp,
+      </if>
+      <if test="dt_date != null" >
+        dt_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dt_id != null" >
+        #{dt_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_id != null" >
+        #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="dt_nr != null" >
+        #{dt_nr,jdbcType=VARCHAR},
+      </if>
+      <if test="dt_dz != null" >
+        #{dt_dz,jdbcType=INTEGER},
+      </if>
+      <if test="dt_c != null" >
+        #{dt_c,jdbcType=INTEGER},
+      </if>
+      <if test="dt_tp != null" >
+        #{dt_tp,jdbcType=VARCHAR},
+      </if>
+      <if test="dt_sp != null" >
+        #{dt_sp,jdbcType=VARCHAR},
+      </if>
+      <if test="dt_date != null" >
+        #{dt_date,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.itjl.model.DtCriteria" resultType="java.lang.Integer" >
+    select count(*) from dt
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dt
+    <set >
+      <if test="record.dt_id != null" >
+        dt_id = #{record.dt_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.user_id != null" >
+        user_id = #{record.user_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.dt_nr != null" >
+        dt_nr = #{record.dt_nr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dt_dz != null" >
+        dt_dz = #{record.dt_dz,jdbcType=INTEGER},
+      </if>
+      <if test="record.dt_c != null" >
+        dt_c = #{record.dt_c,jdbcType=INTEGER},
+      </if>
+      <if test="record.dt_tp != null" >
+        dt_tp = #{record.dt_tp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dt_sp != null" >
+        dt_sp = #{record.dt_sp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dt_date != null" >
+        dt_date = #{record.dt_date,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dt
+    set dt_id = #{record.dt_id,jdbcType=INTEGER},
+      user_id = #{record.user_id,jdbcType=INTEGER},
+      dt_nr = #{record.dt_nr,jdbcType=VARCHAR},
+      dt_dz = #{record.dt_dz,jdbcType=INTEGER},
+      dt_c = #{record.dt_c,jdbcType=INTEGER},
+      dt_tp = #{record.dt_tp,jdbcType=VARCHAR},
+      dt_sp = #{record.dt_sp,jdbcType=VARCHAR},
+      dt_date = #{record.dt_date,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.itjl.model.Dt" >
+    update dt
+    <set >
+      <if test="user_id != null" >
+        user_id = #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="dt_nr != null" >
+        dt_nr = #{dt_nr,jdbcType=VARCHAR},
+      </if>
+      <if test="dt_dz != null" >
+        dt_dz = #{dt_dz,jdbcType=INTEGER},
+      </if>
+      <if test="dt_c != null" >
+        dt_c = #{dt_c,jdbcType=INTEGER},
+      </if>
+      <if test="dt_tp != null" >
+        dt_tp = #{dt_tp,jdbcType=VARCHAR},
+      </if>
+      <if test="dt_sp != null" >
+        dt_sp = #{dt_sp,jdbcType=VARCHAR},
+      </if>
+      <if test="dt_date != null" >
+        dt_date = #{dt_date,jdbcType=DATE},
+      </if>
+    </set>
+    where dt_id = #{dt_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.itjl.model.Dt" >
+    update dt
+    set user_id = #{user_id,jdbcType=INTEGER},
+      dt_nr = #{dt_nr,jdbcType=VARCHAR},
+      dt_dz = #{dt_dz,jdbcType=INTEGER},
+      dt_c = #{dt_c,jdbcType=INTEGER},
+      dt_tp = #{dt_tp,jdbcType=VARCHAR},
+      dt_sp = #{dt_sp,jdbcType=VARCHAR},
+      dt_date = #{dt_date,jdbcType=DATE}
+    where dt_id = #{dt_id,jdbcType=INTEGER}
+  </update>
+</mapper>

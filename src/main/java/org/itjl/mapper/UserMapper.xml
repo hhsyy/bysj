@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.itjl.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="org.itjl.model.User" >
+    <id column="user_id" property="user_id" jdbcType="INTEGER" />
+    <result column="user_name" property="user_name" jdbcType="VARCHAR" />
+    <result column="user_password" property="user_password" jdbcType="VARCHAR" />
+    <result column="user_tx" property="user_tx" jdbcType="VARCHAR" />
+    <result column="user_gxqm" property="user_gxqm" jdbcType="VARCHAR" />
+    <result column="user_date" property="user_date" jdbcType="DATE" />
+    <result column="user_jy" property="user_jy" jdbcType="INTEGER" />
+    <result column="user_lv_id" property="user_lv_id" jdbcType="INTEGER" />
+    <result column="ch_id" property="ch_id" jdbcType="VARCHAR" />
+    <result column="sex_id" property="sex_id" jdbcType="INTEGER" />
+    <result column="user_tag" property="user_tag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_id, user_name, user_password, user_tx, user_gxqm, user_date, user_jy, user_lv_id, 
+    ch_id, sex_id, user_tag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.itjl.model.UserCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{user_id,jdbcType=INTEGER}
+  </select>
+  
+   <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    *
+    from user
+    where user_name= #{user_name}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where user_id = #{user_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.itjl.model.UserCriteria" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.itjl.model.User" >
+    insert into user (user_id, user_name, user_password, 
+      user_tx, user_gxqm, user_date, 
+      user_jy, user_lv_id, ch_id, 
+      sex_id, user_tag)
+    values (#{user_id,jdbcType=INTEGER}, #{user_name,jdbcType=VARCHAR}, #{user_password,jdbcType=VARCHAR}, 
+      #{user_tx,jdbcType=VARCHAR}, #{user_gxqm,jdbcType=VARCHAR}, #{user_date,jdbcType=DATE}, 
+      #{user_jy,jdbcType=INTEGER}, #{user_lv_id,jdbcType=INTEGER}, #{ch_id,jdbcType=VARCHAR}, 
+      #{sex_id,jdbcType=INTEGER}, #{user_tag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.itjl.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="user_id != null" >
+        user_id,
+      </if>
+      <if test="user_name != null" >
+        user_name,
+      </if>
+      <if test="user_password != null" >
+        user_password,
+      </if>
+      <if test="user_tx != null" >
+        user_tx,
+      </if>
+      <if test="user_gxqm != null" >
+        user_gxqm,
+      </if>
+      <if test="user_date != null" >
+        user_date,
+      </if>
+      <if test="user_jy != null" >
+        user_jy,
+      </if>
+      <if test="user_lv_id != null" >
+        user_lv_id,
+      </if>
+      <if test="ch_id != null" >
+        ch_id,
+      </if>
+      <if test="sex_id != null" >
+        sex_id,
+      </if>
+      <if test="user_tag != null" >
+        user_tag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="user_id != null" >
+        #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_name != null" >
+        #{user_name,jdbcType=VARCHAR},
+      </if>
+      <if test="user_password != null" >
+        #{user_password,jdbcType=VARCHAR},
+      </if>
+      <if test="user_tx != null" >
+        #{user_tx,jdbcType=VARCHAR},
+      </if>
+      <if test="user_gxqm != null" >
+        #{user_gxqm,jdbcType=VARCHAR},
+      </if>
+      <if test="user_date != null" >
+        #{user_date,jdbcType=DATE},
+      </if>
+      <if test="user_jy != null" >
+        #{user_jy,jdbcType=INTEGER},
+      </if>
+      <if test="user_lv_id != null" >
+        #{user_lv_id,jdbcType=INTEGER},
+      </if>
+      <if test="ch_id != null" >
+        #{ch_id,jdbcType=VARCHAR},
+      </if>
+      <if test="sex_id != null" >
+        #{sex_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_tag != null" >
+        #{user_tag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.itjl.model.UserCriteria" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.user_id != null" >
+        user_id = #{record.user_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.user_name != null" >
+        user_name = #{record.user_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.user_password != null" >
+        user_password = #{record.user_password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.user_tx != null" >
+        user_tx = #{record.user_tx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.user_gxqm != null" >
+        user_gxqm = #{record.user_gxqm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.user_date != null" >
+        user_date = #{record.user_date,jdbcType=DATE},
+      </if>
+      <if test="record.user_jy != null" >
+        user_jy = #{record.user_jy,jdbcType=INTEGER},
+      </if>
+      <if test="record.user_lv_id != null" >
+        user_lv_id = #{record.user_lv_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.ch_id != null" >
+        ch_id = #{record.ch_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex_id != null" >
+        sex_id = #{record.sex_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.user_tag != null" >
+        user_tag = #{record.user_tag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set user_id = #{record.user_id,jdbcType=INTEGER},
+      user_name = #{record.user_name,jdbcType=VARCHAR},
+      user_password = #{record.user_password,jdbcType=VARCHAR},
+      user_tx = #{record.user_tx,jdbcType=VARCHAR},
+      user_gxqm = #{record.user_gxqm,jdbcType=VARCHAR},
+      user_date = #{record.user_date,jdbcType=DATE},
+      user_jy = #{record.user_jy,jdbcType=INTEGER},
+      user_lv_id = #{record.user_lv_id,jdbcType=INTEGER},
+      ch_id = #{record.ch_id,jdbcType=VARCHAR},
+      sex_id = #{record.sex_id,jdbcType=INTEGER},
+      user_tag = #{record.user_tag,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.itjl.model.User" >
+    update user
+    <set >
+      <if test="user_name != null" >
+        user_name = #{user_name,jdbcType=VARCHAR},
+      </if>
+      <if test="user_password != null" >
+        user_password = #{user_password,jdbcType=VARCHAR},
+      </if>
+      <if test="user_tx != null" >
+        user_tx = #{user_tx,jdbcType=VARCHAR},
+      </if>
+      <if test="user_gxqm != null" >
+        user_gxqm = #{user_gxqm,jdbcType=VARCHAR},
+      </if>
+      <if test="user_date != null" >
+        user_date = #{user_date,jdbcType=DATE},
+      </if>
+      <if test="user_jy != null" >
+        user_jy = #{user_jy,jdbcType=INTEGER},
+      </if>
+      <if test="user_lv_id != null" >
+        user_lv_id = #{user_lv_id,jdbcType=INTEGER},
+      </if>
+      <if test="ch_id != null" >
+        ch_id = #{ch_id,jdbcType=VARCHAR},
+      </if>
+      <if test="sex_id != null" >
+        sex_id = #{sex_id,jdbcType=INTEGER},
+      </if>
+      <if test="user_tag != null" >
+        user_tag = #{user_tag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{user_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.itjl.model.User" >
+    update user
+    set user_name = #{user_name,jdbcType=VARCHAR},
+      user_password = #{user_password,jdbcType=VARCHAR},
+      user_tx = #{user_tx,jdbcType=VARCHAR},
+      user_gxqm = #{user_gxqm,jdbcType=VARCHAR},
+      user_date = #{user_date,jdbcType=DATE},
+      user_jy = #{user_jy,jdbcType=INTEGER},
+      user_lv_id = #{user_lv_id,jdbcType=INTEGER},
+      ch_id = #{ch_id,jdbcType=VARCHAR},
+      sex_id = #{sex_id,jdbcType=INTEGER},
+      user_tag = #{user_tag,jdbcType=VARCHAR}
+    where user_id = #{user_id,jdbcType=INTEGER}
+  </update>
+</mapper>
